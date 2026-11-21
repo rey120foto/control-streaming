@@ -1,0 +1,7 @@
+control-streaming/
+├── app.py
+├── notificador.py
+├── requirements.txt
+└── .github/
+    └── workflows/
+        └── alertas.yml
