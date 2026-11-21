@@ -1,0 +1,25 @@
+name: Alertas Diarias Streaming
+
+on:
+  schedule:
+    # 12:00 UTC = 8:00 AM hora Venezuela (UTC-4)
+    - cron: "0 12 * * *"
+  workflow_dispatch: # Permite probarlo manualmente con 1 clic
+
+jobs:
+  notificar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install supabase requests
+      - name: Ejecutar notificador
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          APP_URL: ${{ secrets.APP_URL }}
+        run: python notificador.py
